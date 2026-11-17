@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia Corporativa | Padang Beach Residence</title>
+  <style>
+    :root {
+      --primary: #0b5c7a;
+      --primary-dark: #074157;
+      --secondary: #159895;
+      --accent: #e6a13c;
+      --bg: #f3f7f9;
+      --card: #ffffff;
+      --text: #1f2d3d;
+      --muted: #5c6f84;
+      --border: #dce6ed;
+      --success: #1b8a5a;
+      --danger: #c93b3b;
+      --warning: #d9822b;
+      --radius: 12px;
+      --shadow: 0 6px 20px rgba(11, 92, 122, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--secondary));
+      color: #fff;
+      padding: 18px 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      border: 2px solid rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .brand h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.3px; }
+    .brand p { font-size: 0.82rem; opacity: 0.9; }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.15);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    /* Navigation Tabs */
+    .nav-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 14px 18px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { color: var(--primary); }
+    .nav-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1220px;
+      margin: 26px auto;
+      padding: 0 20px 60px;
+    }
+
+    .tab-panel { display: none; animation: fadeIn 0.25s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+    .card-title {
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Grid & Buttons */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--secondary); color: #fff; }
+    .btn-secondary:hover { opacity: 0.9; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: rgba(11,92,122,0.06); }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Forms */
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.94rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus { outline: none; border-color: var(--primary); }
+
+    /* Badges & Alerts */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .badge-info { background: #e1f2f7; color: var(--primary-dark); }
+    .badge-success { background: #dff5eb; color: var(--success); }
+    .badge-warning { background: #fef3e2; color: var(--warning); }
+    .badge-danger { background: #fde8e8; color: var(--danger); }
+
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      border-left: 4px solid;
+    }
+    .alert-info { background: #eef7fa; border-color: var(--primary); color: var(--primary-dark); }
+    .alert-warning { background: #fff8eb; border-color: var(--accent); color: #7a4e0b; }
+    .alert-success { background: #eaf7f0; border-color: var(--success); color: #125c3c; }
+    .alert-danger { background: #fdf0f0; border-color: var(--danger); color: #8c2323; }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: #e3ecf2;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--success));
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Course Layout */
+    .course-layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .course-layout { grid-template-columns: 1fr; }
+    }
+    .module-list { display: flex; flex-direction: column; gap: 10px; }
+    .module-item {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .module-item:hover { border-color: var(--secondary); }
+    .module-item.active {
+      border-color: var(--primary);
+      background: #f0f8fb;
+      box-shadow: 0 3px 10px rgba(11,92,122,0.1);
+    }
+    .module-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .module-item h4 { font-size: 0.95rem; color: var(--text); }
+
+    .lesson-content h2 { color: var(--primary-dark); margin-bottom: 10px; font-size: 1.35rem; }
+    .lesson-content h3 { color: var(--primary); margin: 18px 0 8px; font-size: 1.06rem; }
+    .lesson-content ul { padding-left: 20px; margin-bottom: 14px; }
+    .lesson-content li { margin-bottom: 7px; }
+    .article-ref {
+      background: #f4f9fb;
+      border-left: 3px solid var(--secondary);
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 0.88rem;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Media attachments inside module */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .media-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fafcfd;
+    }
+    .media-card video, .media-card iframe {
+      width: 100%;
+      border-radius: 8px;
+      max-height: 240px;
+      background: #000;
+      margin-bottom: 8px;
+    }
+
+    /* Quiz */
+    .quiz-question {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: #fcfdfe;
+    }
+    .quiz-question h4 { margin-bottom: 12px; font-size: 1rem; color: var(--primary-dark); }
+    .quiz-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 0.92rem;
+    }
+    .quiz-option:hover { background: #f0f7fa; }
+    .quiz-option input { margin-top: 4px; }
+
+    /* Certificate */
+    .certificate-wrapper {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+    .certificate-box {
+      width: 100%;
+      max-width: 960px;
+      min-width: 680px;
+      margin: 0 auto;
+      padding: 42px 50px;
+      border: 12px double var(--primary);
+      outline: 3px solid var(--accent);
+      outline-offset: -20px;
+      background: radial-gradient(circle at top right, #f2fafc, #ffffff 60%, #fdf8ee);
+      text-align: center;
+      position: relative;
+      color: #1a2836;
+    }
+    .cert-header {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .cert-title {
+      font-size: 2.3rem;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--primary-dark);
+      margin-bottom: 18px;
+      letter-spacing: 2px;
+    }
+    .cert-name {
+      font-size: 1.85rem;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--secondary);
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+      padding: 4px 28px;
+      margin: 12px 0;
+      font-weight: 700;
+    }
+    .cert-body {
+      font-size: 1.02rem;
+      max-width: 760px;
+      margin: 10px auto 24px;
+      line-height: 1.75;
+    }
+    .cert-meta {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 34px;
+      padding-top: 18px;
+      gap: 20px;
+    }
+    .cert-sign {
+      width: 240px;
+      border-top: 1.5px solid #445668;
+      padding-top: 8px;
+      font-size: 0.85rem;
+    }
+    .cert-footer-code {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Print Styles for Certificate */
+    @media print {
+      body * { visibility: hidden; }
+      #certificado-print-area, #certificado-print-area * { visibility: visible; }
+      #certificado-print-area {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+      }
+      .certificate-box {
+        min-width: unset;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">🌴</div>
+      <div>
+        <h1>Padang Beach Residence — Portal de Capacitação</h1>
+        <p>Curso Obrigatório: Regimento Interno e Convenção Condominial (Barra dos Coqueiros/SE)</p>
+      </div>
+    </div>
+    <div class="user-pill" id="header-user-status">
+      <span>👤 Colaborador não cadastrado</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-tab="tab-inicio">🏠 Início & Importância</button>
+    <button class="nav-btn" data-tab="tab-cadastro">🪪 1. Cadastro</button>
+    <button class="nav-btn" data-tab="tab-curso">📚 2. Curso Online</button>
+    <button class="nav-btn" data-tab="tab-anexos">📎 3. Vídeos e Documentos</button>
+    <button class="nav-btn" data-tab="tab-prova">📝 4. Prova Online</button>
+    <button class="nav-btn" data-tab="tab-certificado">🎓 5. Certificado</button>
+  </div>
+</nav>
+
+<main>
+  <!-- ABA 1: INÍCIO E IMPORTÂNCIA -->
+  <section id="tab-inicio" class="tab-panel active">
+    <div class="card">
+      <h2 class="card-title">🌊 Bem-vindo ao Treinamento Normativo do Padang Beach Residence</h2>
+      <p>Este ambiente virtual foi desenvolvido para capacitar todos os colaboradores próprios e terceirizados (porteiros, rondistas, supervisores, zeladores, auxiliares de limpeza, jardinagem e equipe administrativa) sobre as regras da <strong>Convenção Condominial (06/12/2023)</strong> e do <strong>Regimento Interno (12/01/2024)</strong>.</p>
+
+      <div style="margin: 18px 0;">
+        <div style="display:flex; justify-content:space-between; font-size:0.88rem; font-weight:600;">
+          <span>Seu Progresso Geral no Curso</span>
+          <span id="overall-progress-label">0%</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-fill" id="overall-progress-bar"></div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;">
+        <button class="btn btn-primary" onclick="switchTab('tab-cadastro')">Iniciar pelo Cadastro →</button>
+        <button class="btn btn-outline" onclick="switchTab('tab-curso')">Ir para os Módulos</button>
+        <button class="btn btn-secondary" onclick="switchTab('tab-anexos')">Anexar Vídeos e Documentos</button>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3 class="card-title">⚖️ Importância Legal</h3>
+        <p style="font-size:0.92rem; color:var(--muted);">O <strong>Art. 1º do Regimento Interno</strong> obriga expressamente todos os <em>trabalhadores e prestadores de serviços</em> ao cumprimento das normas. Conhecer os limites legais protege o colaborador de faltas graves e previne passivos ao condomínio.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">🛡️ Motivos de Segurança</h3>
+        <p style="font-size:0.92rem; color:var(--muted);">Com 542 lotes residenciais, a padronização do controle de acesso na portaria, vistoria de veículos, acompanhamento de entregas noturnas por rondista e guarda correta de chaves evita invasões, furtos e sinistros.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">🤝 Necessidade Operacional</h3>
+        <p style="font-size:0.92rem; color:var(--muted);">Define claramente a hierarquia (subordinação ao Síndico e Supervisor), veda serviços particulares no expediente (sujeito a demissão) e orienta o registro formal de ocorrências e prazos.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📌 Fluxo Obrigatório para Certificação</h3>
+      <div class="grid-2" style="margin-top:10px;">
+        <div>
+          <p><strong>Passo 1:</strong> Preencha seus dados reais na aba <strong>Cadastro</strong> (eles serão impressos no certificado).</p>
+          <p><strong>Passo 2:</strong> Estude todos os <strong>5 Módulos</strong> na aba Curso Online e assista/leia os anexos.</p>
+        </div>
+        <div>
+          <p><strong>Passo 3:</strong> Realize a <strong>Prova Online</strong> (12 questões) e alcance nota mínima de <strong>70%</strong>.</p>
+          <p><strong>Passo 4:</strong> Emita e imprima/salve em PDF ou PNG o seu <strong>Certificado Oficial</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABA 2: CADASTRO -->
+  <section id="tab-cadastro" class="tab-panel">
+    <div class="card">
+      <h2 class="card-title">🪪 Cadastro do Colaborador</h2>
+      <p style="margin-bottom:16px; color:var(--muted);">Os dados abaixo serão utilizados para registrar seu progresso e emitir o Certificado de Conclusão.</p>
+      <form id="form-cadastro">
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="cad-nome">Nome Completo *</label>
+            <input type="text" id="cad-nome" class="form-control" placeholder="Ex.: João Carlos da Silva" required />
+          </div>
+          <div class="form-group">
+            <label for="cad-cpf">CPF *</label>
+            <input type="text" id="cad-cpf" class="form-control" placeholder="000.000.000-00" maxlength="14" required />
+          </div>
+          <div class="form-group">
+            <label for="cad-cargo">Cargo / Função no Condomínio *</label>
+            <select id="cad-cargo" class="form-control" required>
+              <option value="">Selecione...</option>
+              <option value="Supervisor Predial">Supervisor Predial</option>
+              <option value="Porteiro / Controlador de Acesso">Porteiro / Controlador de Acesso</option>
+              <option value="Rondista / Segurança">Rondista / Segurança</option>
+              <option value="Zelador / Manutenção">Zelador / Manutenção</option>
+              <option value="Auxiliar de Limpeza / Serviços Gerais">Auxiliar de Limpeza / Serviços Gerais</option>
+              <option value="Jardineiro">Jardineiro</option>
+              <option value="Assistente Administrativo">Assistente Administrativo</option>
+              <option value="Prestador de Serviço Terceirizado">Prestador de Serviço Terceirizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cad-turno">Turno / Vínculo</label>
+            <select id="cad-turno" class="form-control">
+              <option value="Diurno - Orgânico">Diurno - Orgânico</option>
+              <option value="Noturno - Orgânico">Noturno - Orgânico</option>
+              <option value="Diurno - Terceirizado">Diurno - Terceirizado</option>
+              <option value="Noturno - Terceirizado">Noturno - Terceirizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cad-email">E-mail para contato</label>
+            <input type="email" id="cad-email" class="form-control" placeholder="colaborador@padangbeach.com.br" />
+          </div>
+          <div class="form-group">
+            <label for="cad-admissao">Data de Admissão / Início</label>
+            <input type="date" id="cad-admissao" class="form-control" />
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-primary">💾 Salvar Cadastro e Continuar</button>
+          <span id="cad-feedback" style="font-size:0.88rem; color:var(--success); font-weight:600;"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ABA 3: CURSO ONLINE -->
+  <section id="tab-curso" class="tab-panel">
+    <div class="course-layout">
+      <aside>
+        <div class="card" style="padding:16px;">
+          <h3 style="font-size:1rem; margin-bottom:12px; color:var(--primary-dark);">📚 Módulos do Curso</h3>
+          <div class="module-list" id="module-sidebar"></div>
+        </div>
+      </aside>
+      <div class="card lesson-content" id="lesson-viewer">
+        <!-- Preenchido dinamicamente via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ABA 4: ANEXAR VÍDEOS E DOCUMENTOS -->
+  <section id="tab-anexos" class="tab-panel">
+    <div class="card">
+      <h2 class="card-title">📎 Anexar Vídeos e Documentos ao Curso</h2>
+      <p style="color:var(--muted); margin-bottom:16px;">
+        Utilize este painel para anexar videoaulas (arquivos MP4/WebM ou links externos) e documentos complementares (PDFs do Regimento Interno, Convenção, manuais de portaria, comunicados). Os arquivos ficam salvos localmente no banco de dados do navegador (<strong>IndexedDB</strong>) e aparecem automaticamente dentro do módulo escolhido.
+      </p>
+
+      <form id="form-anexo" class="grid-2">
+        <div>
+          <div class="form-group">
+            <label for="anexo-modulo">Vincular ao Módulo *</label>
+            <select id="anexo-modulo" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label for="anexo-tipo">Tipo de Material *</label>
+            <select id="anexo-tipo" class="form-control" required onchange="toggleAnexoInputs()">
+              <option value="video-file">🎬 Vídeo (Arquivo MP4 / WebM / OGG)</option>
+              <option value="video-url">🔗 Vídeo (Link YouTube / URL MP4)</option>
+              <option value="doc-file">📄 Documento (PDF / DOCX / Imagem / TXT)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="anexo-titulo">Título do Material *</label>
+            <input type="text" id="anexo-titulo" class="form-control" placeholder="Ex.: Treinamento Prático de Portaria" required />
+          </div>
+        </div>
+
+        <div>
+          <div class="form-group" id="group-file">
+            <label for="anexo-arquivo">Selecionar Arquivo *</label>
+            <input type="file" id="anexo-arquivo" class="form-control" accept="video/*,.pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" />
+            <small style="color:var(--muted);">Suporta vídeos e documentos armazenados localmente no navegador.</small>
+          </div>
+          <div class="form-group" id="group-url" style="display:none;">
+            <label for="anexo-url">URL do Vídeo (YouTube ou link direto .mp4) *</label>
+            <input type="url" id="anexo-url" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+          </div>
+          <div class="form-group">
+            <label for="anexo-desc">Descrição / Orientações</label>
+            <input type="text" id="anexo-desc" class="form-control" placeholder="Breve resumo para o colaborador" />
+          </div>
+          <button type="submit" class="btn btn-secondary">➕ Anexar ao Módulo</button>
+          <span id="anexo-status" style="margin-left:10px; font-size:0.86rem; font-weight:600;"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🗂️ Biblioteca de Vídeos e Documentos Anexados</h3>
+      <div id="lista-geral-anexos">
+        <p style="color:var(--muted);">Carregando anexos...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABA 5: PROVA ONLINE -->
+  <section id="tab-prova" class="tab-panel">
+    <div class="card">
+      <h2 class="card-title">📝 Avaliação Final Online</h2>
+      <div class="alert alert-info">
+        <strong>Critérios de Conclusão:</strong> Para liberar seu certificado, conclua os 5 módulos do curso e obtenha nota igual ou superior a <strong>70% (9 de 12 questões)</strong>. Você pode refazer a prova caso não atinja a pontuação mínima.
+      </div>
+      <div id="quiz-lock-warning" class="alert alert-warning" style="display:none;"></div>
+      <form id="form-quiz"></form>
+      <div id="quiz-result" style="margin-top:20px;"></div>
+    </div>
+  </section>
+
+  <!-- ABA 6: CERTIFICADO -->
+  <section id="tab-certificado" class="tab-panel">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px;">
+        <h2 class="card-title" style="margin:0;">🎓 Certificado de Conclusão</h2>
+        <div id="cert-actions" style="display:none; gap:10px;">
+          <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+          <button class="btn btn-secondary" onclick="downloadCertificatePNG()">🖼️ Baixar Imagem (PNG)</button>
+        </div>
+      </div>
+
+      <div id="cert-locked" class="alert alert-warning">
+        O certificado será liberado automaticamente após o preenchimento do <strong>Cadastro</strong>, a conclusão dos <strong>5 Módulos</strong> e a aprovação na <strong>Prova Online (≥ 70%)</strong>.
+      </div>
+
+      <div id="certificado-print-area" style="display:none;">
+        <div class="certificate-wrapper">
+          <div class="certificate-box" id="certificate-dom">
+            <div class="cert-header">Condomínio Padang Beach Residence — Barra dos Coqueiros / SE</div>
+            <div class="cert-title">CERTIFICADO DE CONCLUSÃO</div>
+            <p style="font-size:1rem; color:var(--muted);">Certificamos, para os devidos fins trabalhistas e operacionais, que</p>
+            <div class="cert-name" id="cert-user-name">Nome do Colaborador</div>
+            <p class="cert-body">
+              portador(a) do CPF nº <strong id="cert-user-cpf">000.000.000-00</strong>, atuando na função de
+              <strong id="cert-user-cargo">Função</strong> (<span id="cert-user-turno">Turno</span>),
+              concluiu com êxito o <strong>Curso de Capacitação em Regimento Interno e Convenção Condominial do Padang Beach Residence</strong>,
+              com carga horária de <strong>8 horas</strong>, obtendo aproveitamento de <strong id="cert-user-score">100%</strong> na avaliação online final.
+            </p>
+            <p style="font-size:0.9rem; color:var(--muted);">
+              Barra dos Coqueiros (SE), <span id="cert-date">-- de ---- de ----</span>
+            </p>
+            <div class="cert-meta">
+              <div class="cert-sign">
+                <strong>Administração / Síndico</strong><br />
+                Padang Beach Residence
+              </div>
+              <div class="cert-sign">
+                <strong id="cert-sign-worker">Colaborador</strong><br />
+                Ciência das Normas Condominiais
+              </div>
+            </div>
+            <div class="cert-footer-code" id="cert-validation-code">
+              Código de Autenticação: PBR-000000
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // =========================================================================
+  // 1. CONTEÚDO PROGRAMÁTICO (BASEADO NOS PDFs DO PADANG BEACH RESIDENCE)
+  // =========================================================================
+  const MODULES = [
+    {
+      id: 1,
+      title: "Módulo 1: Importância, Motivos e Hierarquia Normativa",
+      duration: "1h 30min",
+      summary: "Por que os funcionários precisam conhecer a Convenção e o Regimento Interno.",
+      content: `
+        <p>O <strong>Padang Beach Residence</strong> (situado na Rodovia SE-100, s/n, Povoado Olhos D'água, Barra dos Coqueiros/SE) é um condomínio residencial horizontal composto por <strong>542 lotes residenciais</strong> (Art. 1º e 2º da Convenção).</p>
+        <h3>Por que o colaborador precisa ter ciência das normas?</h3>
+        <ul>
+          <li><strong>Obrigatoriedade Legal (Art. 1º do RI):</strong> O Regimento Interno obriga expressamente <em>todos os proprietários, trabalhadores, prestadores de serviços, visitantes, hóspedes e entregadores</em>.</li>
+          <li><strong>Proteção Funcional e Prevenção de Faltas Graves:</strong> O cumprimento das regras protege o colaborador contra advertências e demissões por justa causa/disciplinar previstas nos Arts. 18, 19 e 20 do Regimento.</li>
+          <li><strong>Segurança da Comunidade:</strong> A atuação padronizada da equipe evita acessos não autorizados, danos ao patrimônio e riscos à integridade física dos moradores.</li>
+          <li><strong>Preservação da Hierarquia (Art. 17 e Art. 92, § 8º do RI):</strong> Moradores devem abster-se de emitir ordens aos empregados do condomínio. O colaborador recebe ordens exclusivamente do <strong>Síndico</strong> ou do <strong>Supervisor</strong> por ele delegado.</li>
+        </ul>
+        <div class="article-ref">
+          <strong>Regra de Ouro da Hierarquia das Normas (Art. 1º, § 2º do RI):</strong> Havendo qualquer divergência entre o disposto no Regimento Interno e na Convenção do Condomínio, <strong>prevalecerão as regras contidas na Convenção</strong>.
+        </div>
+        <h3>Atendimento e Respeito Mútuo</h3>
+        <ul>
+          <li><strong>Urbanidade (Art. 20, § 1º e Art. 92, §§ 7º e 21º do RI):</strong> O empregado deve atender condôminos, moradores e visitantes com cortesia e educação. Em contrapartida, é dever dos condôminos tratar os empregados com respeito, sendo proibida qualquer agressão física ou moral.</li>
+          <li><strong>Horário de abordagem ao corpo diretivo (Art. 8º, § 2º do RI):</strong> Sugestões ou reclamações ao Síndico, Subsíndico ou Conselhos devem ocorrer em horário comercial (<strong>08h às 18h</strong>), salvo urgências.</li>
+        </ul>
+      `
+    },
+    {
+      id: 2,
+      title: "Módulo 2: Deveres dos Empregados, Sigilo e Atribuições do Supervisor",
+      duration: "1h 45min",
+      summary: "Regras de conduta, proibições passíveis de demissão, encomendas e gestão operacional.",
+      content: `
+        <p>O Capítulo VI do Regimento Interno (Arts. 17 a 20) e os Arts. 8º e 30 da Convenção estabelecem deveres rígidos para todos os funcionários (porteiros, rondistas, supervisores, zeladores e limpeza).</p>
+        <h3>Condutas Estritamente Proibidas (Risco de Advertência ou Demissão)</h3>
+        <ul>
+          <li><strong>Serviços particulares (Art. 18 do RI e Art. 8º, item 10 da Convenção):</strong> É proibido aos empregados prestar serviços particulares aos moradores no horário de trabalho (sujeito a advertência e, na reincidência, <strong>demissão</strong>). Pela Convenção, moradores não devem utilizá-los nem mesmo em folgas ou férias.</li>
+          <li><strong>Quebra de sigilo (Art. 20, § 2º do RI):</strong> Não prestar qualquer informação a terceiros sobre condôminos e moradores sem prévia autorização, sob pena de <strong>demissão</strong>.</li>
+          <li><strong>Falta de anúncio na portaria (Art. 19 do RI):</strong> É obrigatório anunciar qualquer pessoa que se dirija às residências (salvo dispensa expressa do morador), sob pena de punição, inclusive <strong>demissão</strong>.</li>
+          <li><strong>Ausência do posto e manuseio de valores (Art. 20, § 4º do RI):</strong> Não se ausentar do local de trabalho para levar objetos pessoais às unidades, nem receber objetos, cheques ou dinheiro em espécie para entrega futura a terceiros.</li>
+          <li><strong>Guarda de chaves (Art. 96 do RI e Art. 8º, item 34 da Convenção):</strong> É <strong>terminantemente proibido</strong> deixar ou guardar chaves de residências, veículos ou canteiros de obras na portaria ou com terceirizados.</li>
+        </ul>
+        <h3>Regras de Uniforme, Postura e Encomendas</h3>
+        <ul>
+          <li><strong>Uniforme e EPI (Art. 9º, § 8º e Art. 20, § 9º do RI):</strong> Uso obrigatório de uniforme completo, calçados adequados, postura, higiene e Equipamentos de Proteção Individual (EPI).</li>
+          <li><strong>Correspondências e Encomendas (Art. 20, § 6º do RI):</strong> Entrega mediante protocolo na portaria. O condomínio recebe apenas encomendas de até <strong>1 m³</strong> e prazo máximo de permanência de <strong>48 horas</strong> (sujeito a multa leve ao morador se exceder sem justificativa).</li>
+        </ul>
+        <div class="article-ref">
+          <strong>Atribuições-chave do Supervisor (Art. 9º do RI):</strong> Fiscalizar estoque e inventário; controlar uso de EPI e horários de saída/retorno dos empregados; inspecionar reservatórios de água, gás e extintores (mensalmente); realizar no mínimo <strong>3 cotações</strong> para serviços; transcrever ocorrências para o sistema no <strong>1º dia útil</strong> e dar providências em até <strong>3 dias úteis</strong> (§§ 28º e 30º). Em caso de sinistro/vazamento sem o morador e sem o corpo diretivo, adotar medidas inclusive arrombamento acompanhado de pelo menos <strong>2 outros condôminos</strong> (§ 2º).
+        </div>
+      `
+    },
+    {
+      id: 3,
+      title: "Módulo 3: Controle de Acesso, Portaria, Segurança e Trânsito",
+      duration: "1h 45min",
+      summary: "Visitantes, convidados, prestadores, delivery noturno, câmeras e velocidade interna.",
+      content: `
+        <p>O Capítulo IV do Regimento Interno (Arts. 10 a 15) define os procedimentos que garantem a segurança na portaria e nas vias internas.</p>
+        <h3>Identificação e Cadastros</h3>
+        <ul>
+          <li><strong>Visitantes e Convidados (Art. 11 e Art. 14 do RI):</strong> Visitantes esporádicos aguardam na portaria até autorização da unidade e apresentam documento. Convidados só acessam clubes/áreas sociais se cadastrados e confirmada a presença do condômino responsável no condomínio.</li>
+          <li><strong>Prestadores de Serviço e Empregados Domésticos (Art. 13 e Art. 15, §§ 4º a 6º do RI):</strong> Obrigatória apresentação de documento oficial na portaria, autorização prévia e registro de entrada/saída. O cadastro é cancelado automaticamente após <strong>10 dias</strong> sem movimentação (prestadores) ou <strong>35 dias</strong> (empregados domésticos).</li>
+          <li><strong>Entradas Proibidas (Art. 12 e Art. 14, §§ 6º e 8º do RI):</strong> Pedintes, propagandistas, vendedores ambulantes, veículos de tração animal e carros de som de propaganda (exceto mini trio elétrico em festas autorizadas pelo condomínio).</li>
+        </ul>
+        <h3>Veículos, Trânsito e Entregas Delivery</h3>
+        <ul>
+          <li><strong>Procedimento na Portaria (Art. 15, §§ 1º e 2º do RI):</strong> Veículos devem transitar lentamente, abaixar todos os vidros, apagar faróis e acender luz interna. Motociclistas devem <strong>retirar o capacete</strong> para identificação.</li>
+          <li><strong>Velocidade Máxima (Art. 14, § 13º RI e Art. 8º-5 Convenção):</strong> Limite máximo de <strong>30 km/h</strong> nas vias internas (proibido buzinar).</li>
+          <li><strong>Veículos de Visitantes e Estacionamento (Art. 14, §§ 10º e 11º RI):</strong> Permitidos até <strong>2 veículos de passeio</strong> de visitantes por unidade estacionados em frente à residência (excedentes vão aos estacionamentos do Centro Ecumênico, Clube 1 ou Clube 2). Proibido estacionamento prolongado (>4h) de caminhões, ônibus, embarcações, tratores ou frota empresarial, e proibido estacionar na avenida principal ou calçadas.</li>
+          <li><strong>Entregas Delivery (Art. 14, § 12º RI):</strong> Permitidas das <strong>06h às 22h</strong>. Após as 22h, somente medicamentos e alimentos caso o morador esteja impossibilitado de ir à portaria, devendo o entregador ser <strong>acompanhado por um rondista</strong> com autorização prévia do condômino.</li>
+          <li><strong>Câmeras de Segurança (Art. 14, § 5º RI):</strong> Monitoramento 24h com gravação por no mínimo <strong>15 dias</strong>. Imagens só são fornecidas por ordem judicial, inquérito policial ou solicitação de condômino autorizada pelo Síndico/Colegiado Gestor.</li>
+        </ul>
+      `
+    },
+    {
+      id: 4,
+      title: "Módulo 4: Áreas Comuns, Clubes, Lazer, Festas, Pets e Limpeza",
+      duration: "1h 30min",
+      summary: "Regras das piscinas, academia, salão de festas, pets, ruídos e coleta de resíduos.",
+      content: `
+        <p>Os funcionários de portaria, supervisão, rondas e limpeza devem fiscalizar e orientar o uso adequado das áreas comuns (Capítulos V, VIII a XVI do RI).</p>
+        <h3>Piscinas, Academia, Salão de Jogos e Playground</h3>
+        <ul>
+          <li><strong>Piscinas (Art. 26 RI):</strong> Funcionamento das <strong>07h às 23h</strong>. Interditadas para manutenção às <strong>terças-feiras (Clube 1)</strong> e <strong>segundas-feiras (Clube 2)</strong> (ou dia útil seguinte se feriado). Proibido vidro, fumar, comida/bebida na água, menores de 12 anos desacompanhados. <em>Empregados do condomínio não podem utilizar as piscinas, salvo como convidados de morador.</em></li>
+          <li><strong>Academia e Pilates (Arts. 29 a 31 RI):</strong> Funcionamento das <strong>05h às 24h</strong>. A chave é retirada na portaria apenas pelo condômino ou dependente <strong>maior de 14 anos</strong> expressamente autorizado. Proibido o uso por visitantes ou empregados; uso obrigatório de toalha e calçado adequado.</li>
+          <li><strong>Salão de Jogos (08h–22h) e Playground (08h–22h / férias até 23h):</strong> Menores de 12 anos no salão de jogos somente acompanhados; brinquedos do playground restritos a crianças de até 10 anos.</li>
+        </ul>
+        <h3>Salão de Festas, Gourmet, Churrasqueiras e Ruídos</h3>
+        <ul>
+          <li><strong>Reservas e Devolução (Art. 28 RI):</strong> Horário de uso das 08h às 23h59. Checklist obrigatório antes e após o evento. As chaves devem ser devolvidas na portaria até as <strong>08h30 do dia seguinte</strong> (multa grave em caso de atraso). Lista de convidados deve ser entregue com mínimo de <strong>2 horas</strong> de antecedência (festas em residências com >20 pessoas também exigem lista prévia).</li>
+          <li><strong>Ruídos e Fogos (Art. 23 RI e Art. 8º-5 Convenção):</strong> Limites da ABNT NBR 10151/2019: <strong>55 dB de dia (7h–20h)</strong> e <strong>50 dB à noite</strong>. Ao constatar excesso em festas, a equipe solicita cessação imediata (advertência); persistindo, aplica-se multa média e após 15 min multa grave. Proibido soltar balões ou fogos com estampido/rojões.</li>
+        </ul>
+        <h3>Limpeza e Animais Domésticos</h3>
+        <ul>
+          <li><strong>Limpeza e Lixo (Art. 16 RI e Art. 8º-15 Convenção):</strong> Objetos perfurocortantes devem ser embalados de forma segura pelo morador (multa média se descumprido). Proibido deixar sacos fora das lixeiras ou nas áreas comuns; nos domingos/feriados ou fora do horário de coleta, o morador deve depositar na casa de lixo. Proibida queima de lixo/folhas (Art. 95 RI).</li>
+          <li><strong>Pets (Arts. 43 a 47 RI e Art. 8º-29 a 31 Convenção):</strong> Cães e gatos cadastrados no app; trânsito nas vias somente com coleira/guia (e focinheira para grande porte); proibido acesso às áreas sociais fechadas/piscinas/academia/parques; dono responsável por recolher fezes.</li>
+        </ul>
+      `
+    },
+    {
+      id: 5,
+      title: "Módulo 5: Obras, Mudanças, Fiscalização e Ocorrências",
+      duration: "1h 30min",
+      summary: "Regras para construções, horários de mudanças, caminhões, crachás e registro de ocorrências.",
+      content: `
+        <p>O controle rigoroso de obras e mudanças protege a infraestrutura viária, redes subterrâneas e o sossego do residencial (Cap. VII e XVII do RI; Cap. III e IV da Convenção).</p>
+        <h3>Mudanças (Arts. 21 e 22 do RI)</h3>
+        <ul>
+          <li><strong>Horários permitidos:</strong> Segunda a sexta-feira das <strong>08h às 17h</strong>; sábados das <strong>08h às 13h</strong>. <strong>Proibido aos domingos e feriados.</strong></li>
+          <li><strong>Liberação obrigatória:</strong> Exige apresentação prévia do <strong>"Habite-se"</strong> (e cópia do contrato de locação se inquilino, para atualização imediata no sistema).</li>
+        </ul>
+        <h3>Segurança e Controle de Obras (Cap. XVII RI e Cap. III-IV Convenção)</h3>
+        <ul>
+          <li><strong>Autorização prévia:</strong> Nenhuma obra inicia sem Termo de Aprovação de Projeto e Alvará da Prefeitura (Art. 84 RI). Reformas simples sem ampliação exigem aviso prévio de <strong>2 dias úteis</strong> (Art. 92, § 25º RI).</li>
+          <li><strong>Acesso e Crachá de Trabalhadores (Arts. 10 a 13 da Convenção e Art. 85 RI):</strong> Entrada permitida a partir das <strong>07h</strong>. Uso obrigatório de <strong>crachá em local visível</strong>, devolvido diariamente à portaria. É <strong>proibida a permanência fora do horário e o pernoite</strong> de funcionários nas obras.</li>
+          <li><strong>Tapumes e Entulhos (Art. 78 e 79 RI):</strong> Tapume mínimo de 1,80m antes de qualquer atividade; proibido ocupar calçadas com tapume, material ou resto de obra.</li>
+          <li><strong>Caminhões e Concretagem (Arts. 82, 86 e 87 RI; Art. 9º Convenção):</strong> Caminhões de terra/areia/brita devem usar proteção de <strong>lona</strong>. Proibido subir nas calçadas acabadas, fazer massa/concreto sobre as vias ou lavar betoneiras nas ruas. Interrupção de via para concretagem com bomba exige pedido com <strong>48h de antecedência</strong>, entrada entre 08h e 12h, e é <strong>proibida aos sábados</strong>.</li>
+        </ul>
+        <div class="article-ref">
+          <strong>Registro de Ocorrências:</strong> Toda irregularidade presenciada pelos empregados deve ser imediatamente comunicada ao superior/Administração e registrada no Livro ou Aplicativo de Ocorrências (Art. 20, §§ 5º e 7º RI), assegurando rastreabilidade e solução dentro dos prazos regimentais.
+        </div>
+      `
+    }
+  ];
+
+  // =========================================================================
+  // 2. BANCO DE QUESTÕES DA PROVA ONLINE (12 QUESTÕES BASEADAS NOS PDFs)
+  // =========================================================================
+  const QUIZ_QUESTIONS = [
+    {
+      q: "1. Segundo o Art. 1º do Regimento Interno, quem está obrigado a cumprir suas disposições?",
+      options: [
+        "Apenas os proprietários de lotes edificados.",
+        "Somente o Síndico, o Subsíndico e os moradores.",
+        "Todos os proprietários, trabalhadores, prestadores de serviços, convidados, visitantes, hóspedes e entregadores.",
+        "Apenas os moradores inadimplentes e visitantes esporádicos."
+      ],
+      correct: 2,
+      ref: "Art. 1º do Regimento Interno."
+    },
+    {
+      q: "2. Caso haja divergência entre uma regra do Regimento Interno e uma regra da Convenção do Condomínio, qual prevalece?",
+      options: [
+        "Prevalece sempre o Regimento Interno por ser mais recente.",
+        "Prevalecerão as regras contidas na Convenção do Condomínio.",
+        "O porteiro decide qual regra aplicar no momento.",
+        "Nenhuma das duas se aplica até nova votação."
+      ],
+      correct: 1,
+      ref: "Art. 1º, § 2º do Regimento Interno."
+    },
+    {
+      q: "3. O que ocorre se um empregado do condomínio utilizar seu horário de trabalho para prestar serviços particulares a um morador?",
+      options: [
+        "É permitido, desde que o morador pague uma taxa extra.",
+        "O empregado fica sujeito à advertência e, em caso de reincidência, demissão.",
+        "Apenas o morador recebe uma advertência verbal.",
+        "É permitido se for autorizado pelo porteiro do turno."
+      ],
+      correct: 1,
+      ref: "Art. 18 do Regimento Interno (e Art. 8º, item 10 da Convenção)."
+    },
+    {
+      q: "4. Sobre a guarda de chaves de residências ou veículos dos moradores na portaria, o Regimento Interno e a Convenção determinam que:",
+      options: [
+        "É permitida por até 24 horas mediante protocolo.",
+        "É obrigatória em caso de viagem do morador.",
+        "É estritamente proibida.",
+        "É permitida apenas para lotes em construção."
+      ],
+      correct: 2,
+      ref: "Art. 96 do Regimento Interno e Art. 8º, item 34 da Convenção."
+    },
+    {
+      q: "5. Qual é o limite de volume e o prazo máximo de permanência para encomendas recebidas na portaria?",
+      options: [
+        "Até 1 m³ e prazo máximo de 48 horas.",
+        "Até 3 m³ e prazo máximo de 7 dias.",
+        "Sem limite de tamanho e prazo de 72 horas.",
+        "Até 0,5 m³ e retirada obrigatória no mesmo dia."
+      ],
+      correct: 0,
+      ref: "Art. 20, § 6º do Regimento Interno."
+    },
+    {
+      q: "6. Qual o procedimento correto para entregas tipo 'delivery' após as 22h?",
+      options: [
+        "O entregador entra sozinho de motocicleta até a casa do morador.",
+        "É totalmente proibido entregar qualquer item após as 22h, mesmo medicamentos.",
+        "Em casos de medicamentos ou alimentos com morador impossibilitado de ir à portaria, o acesso pode ocorrer após autorização prévia e acompanhado por rondista do condomínio.",
+        "O porteiro abandona a portaria e vai entregar o pedido na casa."
+      ],
+      correct: 2,
+      ref: "Art. 14, § 12º do Regimento Interno."
+    },
+    {
+      q: "7. Ao passar pela portaria, quais procedimentos de segurança o vigilante deve solicitar aos condutores de veículos e motocicletas?",
+      options: [
+        "Apenas buzinar duas vezes para liberar a cancela.",
+        "Abaixar os vidros, apagar os faróis, acender a luz interna e, no caso de motocicletas, retirar o capacete para identificação.",
+        "Desligar o motor e entregar a chave na portaria.",
+        "Manter os faróis altos ligados para iluminar a guarita."
+      ],
+      correct: 1,
+      ref: "Art. 15, § 2º do Regimento Interno."
+    },
+    {
+      q: "8. Após quantos dias sem movimentação de entrada e saída o cadastro é cancelado automaticamente?",
+      options: [
+        "5 dias para prestadores e 15 dias para domésticos.",
+        "10 dias para prestadores de serviços e 35 dias para empregados domésticos.",
+        "30 dias para ambos os casos.",
+        "Nunca é cancelado automaticamente."
+      ],
+      correct: 1,
+      ref: "Art. 15, § 6º do Regimento Interno."
+    },
+    {
+      q: "9. Qual a velocidade máxima permitida nas vias internas do Padang Beach Residence?",
+      options: [
+        "20 km/h.",
+        "30 km/h.",
+        "40 km/h.",
+        "50 km/h."
+      ],
+      correct: 1,
+      ref: "Art. 14, § 13º do Regimento Interno e Art. 8º, item 5 da Convenção."
+    },
+    {
+      q: "10. Sobre a utilização das piscinas e da academia pelos empregados do condomínio:",
+      options: [
+        "Podem utilizar livremente fora do horário de expediente.",
+        "Podem usar a academia, mas não as piscinas.",
+        "É vedada a utilização da academia por empregados; nas piscinas é vedada, salvo na condição de convidado de algum morador.",
+        "Somente o Supervisor pode utilizar a academia diariamente."
+      ],
+      correct: 2,
+      ref: "Art. 26, § 1º, XI e Art. 29 do Regimento Interno."
+    },
+    {
+      q: "11. Em quais dias as piscinas ficam interditadas para manutenção (quando não for feriado)?",
+      options: [
+        "Clube 1 às segundas-feiras e Clube 2 às terças-feiras.",
+        "Clube 1 às terças-feiras e Clube 2 às segundas-feiras.",
+        "Ambos os clubes às quartas-feiras.",
+        "Apenas aos domingos à noite."
+      ],
+      correct: 1,
+      ref: "Art. 26, § 5º do Regimento Interno."
+    },
+    {
+      q: "12. Sobre o controle dos trabalhadores em obras e horários de mudanças:",
+      options: [
+        "Operários podem dormir na obra se autorizados pelo mestre de obras, e mudanças ocorrem aos domingos.",
+        "Funcionários das obras acessam a partir das 07h usando crachá visível (devolvido diariamente) e é proibido pernoite; mudanças exigem 'habite-se' e não podem ocorrer aos domingos e feriados.",
+        "Mudanças podem ocorrer até às 22h de segunda a sábado sem necessidade de 'habite-se'.",
+        "Caminhões betoneira podem fazer concretagem com bomba normalmente aos sábados sem aviso prévio."
+      ],
+      correct: 1,
+      ref: "Arts. 21, 22 e 87 do Regimento Interno; Arts. 10 a 12 da Convenção."
+    }
+  ];
+
+  // =========================================================================
+  // 3. ESTADO DA APLICAÇÃO (LOCALSTORAGE + INDEXEDDB PARA ANEXOS REAIS)
+  // =========================================================================
+  const STORAGE_KEY = "padang_lms_state_v1";
+  let state = {
+    user: null, // { nome, cpf, cargo, turno, email, admissao }
+    completedModules: [],
+    currentModuleId: 1,
+    quizPassed: false,
+    quizScore: 0,
+    certCode: null,
+    certDate: null
+  };
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) state = { ...state, ...JSON.parse(saved) };
+    } catch (e) { console.error(e); }
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateUI();
+  }
+
+  // IndexedDB para vídeos e documentos anexados
+  const DB_NAME = "PadangLMS_Attachments";
+  const DB_VERSION = 1;
+  let db = null;
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e) => {
+        const database = e.target.result;
+        if (!database.objectStoreNames.contains("attachments")) {
+          database.createObjectStore("attachments", { keyPath: "id", autoIncrement: true });
+        }
+      };
+      req.onsuccess = (e) => { db = e.target.result; resolve(db); };
+      req.onerror = (e) => reject(e);
+    });
+  }
+
+  function addAttachment(item) {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(["attachments"], "readwrite");
+      const store = tx.objectStore("attachments");
+      const req = store.add(item);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = (e) => reject(e);
+    });
+  }
+
+  function getAllAttachments() {
+    return new Promise((resolve, reject) => {
+      if (!db) return resolve([]);
+      const tx = db.transaction(["attachments"], "readonly");
+      const store = tx.objectStore("attachments");
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = (e) => reject(e);
+    });
+  }
+
+  function deleteAttachment(id) {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(["attachments"], "readwrite");
+      const store = tx.objectStore("attachments");
+      const req = store.delete(id);
+      req.onsuccess = () => resolve();
+      req.onerror = (e) => reject(e);
+    });
+  }
+
+  // =========================================================================
+  // 4. NAVEGAÇÃO & MÁSCARA CPF
+  // =========================================================================
+  function switchTab(tabId) {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === tabId));
+    if (tabId === "tab-curso") renderCurrentModule();
+    if (tabId === "tab-anexos") renderAllAttachmentsList();
+    if (tabId === "tab-prova") renderQuiz();
+    if (tabId === "tab-certificado") renderCertificate();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+
+  document.getElementById("cad-cpf").addEventListener("input", (e) => {
+    let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    e.target.value = v;
+  });
+
+  // =========================================================================
+  // 5. CADASTRO DO USUÁRIO
+  // =========================================================================
+  document.getElementById("form-cadastro").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nome = document.getElementById("cad-nome").value.trim();
+    const cpf = document.getElementById("cad-cpf").value.trim();
+    const cargo = document.getElementById("cad-cargo").value;
+    const turno = document.getElementById("cad-turno").value;
+    const email = document.getElementById("cad-email").value.trim();
+    const admissao = document.getElementById("cad-admissao").value;
+
+    if (cpf.replace(/\D/g, "").length !== 11) {
+      alert("Por favor, informe um CPF válido com 11 dígitos.");
+      return;
+    }
+
+    state.user = { nome, cpf, cargo, turno, email, admissao };
+    saveState();
+    document.getElementById("cad-feedback").textContent = "✔ Cadastro salvo com sucesso!";
+    setTimeout(() => switchTab("tab-curso"), 700);
+  });
+
+  function fillCadastroForm() {
+    if (!state.user) return;
+    document.getElementById("cad-nome").value = state.user.nome || "";
+    document.getElementById("cad-cpf").value = state.user.cpf || "";
+    document.getElementById("cad-cargo").value = state.user.cargo || "";
+    document.getElementById("cad-turno").value = state.user.turno || "Diurno - Orgânico";
+    document.getElementById("cad-email").value = state.user.email || "";
+    document.getElementById("cad-admissao").value = state.user.admissao || "";
+  }
+
+  // =========================================================================
+  // 6. MÓDULOS DO CURSO E EXIBIÇÃO DE ANEXOS
+  // =========================================================================
+  function renderModuleSidebar() {
+    const container = document.getElementById("module-sidebar");
+    container.innerHTML = MODULES.map(m => {
+      const done = state.completedModules.includes(m.id);
+      const active = state.currentModuleId === m.id;
+      return `
+        <button class="module-item ${active ? "active" : ""}" onclick="selectModule(${m.id})">
+          <div class="module-item-head">
+            <span>MÓDULO ${m.id} • ${m.duration}</span>
+            <span>${done ? '<span class="badge badge-success">Concluído</span>' : '<span class="badge badge-info">Pendente</span>'}</span>
+          </div>
+          <h4>${m.title.replace(/^Módulo \d+:\s*/, "")}</h4>
+        </button>
+      `;
+    }).join("");
+  }
+
+  function selectModule(id) {
+    state.currentModuleId = id;
+    saveState();
+    renderCurrentModule();
+  }
+
+  function parseYouTubeEmbed(url) {
+    try {
+      const u = new URL(url);
+      if (u.hostname.includes("youtube.com") && u.searchParams.get("v")) {
+        return `https://www.youtube.com/embed/${u.searchParams.get("v")}`;
+      }
+      if (u.hostname.includes("youtu.be")) {
+        return `https://www.youtube.com/embed/${u.pathname.slice(1)}`;
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  async function renderCurrentModule() {
+    renderModuleSidebar();
+    const mod = MODULES.find(m => m.id === state.currentModuleId) || MODULES[0];
+    const isDone = state.completedModules.includes(mod.id);
+    const attachments = (await getAllAttachments()).filter(a => Number(a.moduleId) === mod.id);
+
+    let mediaHtml = "";
+    if (attachments.length > 0) {
+      mediaHtml = `
+        <h3 style="margin-top:24px; border-top:1px solid var(--border); padding-top:16px;">🎬 Vídeos e Documentos Anexados neste Módulo</h3>
+        <div class="media-grid">
+          ${attachments.map(att => {
+            if (att.type === "video-file" && att.blob) {
+              const url = URL.createObjectURL(att.blob);
+              return `
+                <div class="media-card">
+                  <video controls src="${url}"></video>
+                  <strong>${escapeHtml(att.title)}</strong>
+                  <p style="font-size:0.82rem; color:var(--muted);">${escapeHtml(att.description || att.fileName || "")}</p>
+                </div>`;
+            }
+            if (att.type === "video-url") {
+              const yt = parseYouTubeEmbed(att.url);
+              const player = yt
+                ? `<iframe src="${yt}" frameborder="0" allowfullscreen></iframe>`
+                : `<video controls src="${escapeHtml(att.url)}"></video>`;
+              return `
+                <div class="media-card">
+                  ${player}
+                  <strong>${escapeHtml(att.title)}</strong>
+                  <p style="font-size:0.82rem; color:var(--muted);">${escapeHtml(att.description || "")}</p>
+                </div>`;
+            }
+            if (att.type === "doc-file" && att.blob) {
+              const url = URL.createObjectURL(att.blob);
+              return `
+                <div class="media-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+                  <div>
+                    <span class="badge badge-info" style="margin-bottom:8px;">📄 Documento</span><br/>
+                    <strong>${escapeHtml(att.title)}</strong>
+                    <p style="font-size:0.82rem; color:var(--muted); margin:6px 0 12px;">${escapeHtml(att.description || att.fileName || "")}</p>
+                  </div>
+                  <div style="display:flex; gap:8px;">
+                    <a href="${url}" target="_blank" class="btn btn-outline btn-sm">👁️ Abrir</a>
+                    <a href="${url}" download="${escapeHtml(att.fileName || 'documento')}" class="btn btn-primary btn-sm">⬇️ Baixar</a>
+                  </div>
+                </div>`;
+            }
+            return "";
+          }).join("")}
+        </div>
+      `;
+    } else {
+      mediaHtml = `
+        <div class="alert alert-info" style="margin-top:20px;">
+          💡 Nenhum vídeo ou arquivo extra anexado a este módulo ainda. Utilize a aba <strong>Vídeos e Documentos</strong> para anexar os PDFs originais ou videoaulas internas.
+        </div>
+      `;
+    }
+
+    const nextMod = MODULES.find(m => m.id === mod.id + 1);
+    document.getElementById("lesson-viewer").innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+        <span class="badge badge-info">Carga Estimada: ${mod.duration}</span>
+        ${isDone ? '<span class="badge badge-success">✔ Módulo Concluído</span>' : '<span class="badge badge-warning">Em Andamento</span>'}
+      </div>
+      <h2>${mod.title}</h2>
+      <p style="color:var(--muted); margin-bottom:16px;">${mod.summary}</p>
+      ${mod.content}
+      ${mediaHtml}
+      <div style="margin-top:26px; padding-top:18px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <button class="btn ${isDone ? 'btn-outline' : 'btn-success'}" onclick="toggleModuleComplete(${mod.id})">
+          ${isDone ? '↺ Desmarcar Conclusão' : '✔ Marcar Módulo como Concluído'}
+        </button>
+        ${nextMod
+          ? `<button class="btn btn-primary" onclick="completeAndNext(${mod.id}, ${nextMod.id})">Concluir e Ir para Módulo ${nextMod.id} →</button>`
+          : `<button class="btn btn-primary" onclick="completeAndGoExam(${mod.id})">Concluir e Ir para Prova Online →</button>`
+        }
+      </div>
+    `;
+  }
+
+  function toggleModuleComplete(id) {
+    if (state.completedModules.includes(id)) {
+      state.completedModules = state.completedModules.filter(m => m !== id);
+    } else {
+      state.completedModules.push(id);
+    }
+    saveState();
+    renderCurrentModule();
+  }
+
+  function completeAndNext(currId, nextId) {
+    if (!state.completedModules.includes(currId)) state.completedModules.push(currId);
+    state.currentModuleId = nextId;
+    saveState();
+    renderCurrentModule();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function completeAndGoExam(currId) {
+    if (!state.completedModules.includes(currId)) state.completedModules.push(currId);
+    saveState();
+    switchTab("tab-prova");
+  }
+
+  // =========================================================================
+  // 7. GESTÃO DE ANEXOS (VÍDEOS E DOCUMENTOS VIA INDEXEDDB)
+  // =========================================================================
+  function populateAnexoModuleSelect() {
+    const sel = document.getElementById("anexo-modulo");
+    sel.innerHTML = MODULES.map(m => `<option value="${m.id}">${m.title}</option>`).join("");
+  }
+
+  function toggleAnexoInputs() {
+    const type = document.getElementById("anexo-tipo").value;
+    document.getElementById("group-file").style.display = type === "video-url" ? "none" : "block";
+    document.getElementById("group-url").style.display = type === "video-url" ? "block" : "none";
+  }
+
+  document.getElementById("form-anexo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const moduleId = Number(document.getElementById("anexo-modulo").value);
+    const type = document.getElementById("anexo-tipo").value;
+    const title = document.getElementById("anexo-titulo").value.trim();
+    const description = document.getElementById("anexo-desc").value.trim();
+    const statusEl = document.getElementById("anexo-status");
+
+    let item = { moduleId, type, title, description, createdAt: new Date().toISOString() };
+
+    if (type === "video-url") {
+      const url = document.getElementById("anexo-url").value.trim();
+      if (!url) { alert("Informe a URL do vídeo."); return; }
+      item.url = url;
+    } else {
+      const fileInput = document.getElementById("anexo-arquivo");
+      const file = fileInput.files[0];
+      if (!file) { alert("Selecione um arquivo para anexar."); return; }
+      item.fileName = file.name;
+      item.fileSize = file.size;
+      item.mimeType = file.type;
+      item.blob = file;
+    }
+
+    statusEl.style.color = "var(--primary)";
+    statusEl.textContent = "Salvando arquivo...";
+    await addAttachment(item);
+    statusEl.style.color = "var(--success)";
+    statusEl.textContent = "✔ Material anexado!";
+    e.target.reset();
+    toggleAnexoInputs();
+    renderAllAttachmentsList();
+    setTimeout(() => { statusEl.textContent = ""; }, 2500);
+  });
+
+  async function renderAllAttachmentsList() {
+    const list = await getAllAttachments();
+    const el = document.getElementById("lista-geral-anexos");
+    if (list.length === 0) {
+      el.innerHTML = `<p style="color:var(--muted);">Nenhum vídeo ou documento anexado até o momento.</p>`;
+      return;
+    }
+    el.innerHTML = `
+      <div class="media-grid">
+        ${list.map(att => {
+          const mod = MODULES.find(m => m.id === Number(att.moduleId));
+          const typeLabel = att.type === "video-file" ? "🎬 Vídeo Local" : att.type === "video-url" ? "🔗 Vídeo Link" : "📄 Documento";
+          const sizeMB = att.fileSize ? ` (${(att.fileSize / (1024*1024)).toFixed(2)} MB)` : "";
+          return `
+            <div class="media-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span class="badge badge-info">${typeLabel}</span>
+                <button class="btn btn-danger btn-sm" onclick="removeAttachment(${att.id})">🗑️ Excluir</button>
+              </div>
+              <strong>${escapeHtml(att.title)}</strong>
+              <p style="font-size:0.8rem; color:var(--primary); margin:4px 0;">Módulo ${att.moduleId}: ${mod ? escapeHtml(mod.title.replace(/^Módulo \d+:\s*/, "")) : ""}</p>
+              <p style="font-size:0.8rem; color:var(--muted);">${escapeHtml(att.fileName || att.url || "")}${sizeMB}</p>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
+
+  async function removeAttachment(id) {
+    if (!confirm("Deseja remover este anexo do curso?")) return;
+    await deleteAttachment(id);
+    renderAllAttachmentsList();
+  }
+
+  // =========================================================================
+  // 8. PROVA ONLINE
+  // =========================================================================
+  function renderQuiz() {
+    const warn = document.getElementById("quiz-lock-warning");
+    const form = document.getElementById("form-quiz");
+    const missingUser = !state.user;
+    const missingMods = state.completedModules.length < MODULES.length;
+
+    if (missingUser || missingMods) {
+      warn.style.display = "block";
+      warn.innerHTML = `
+        ⚠️ <strong>Atenção:</strong> Para validar a emissão do certificado após a prova, certifique-se de:
+        ${missingUser ? "<br>• Preencher o <strong>Cadastro</strong> do colaborador;" : ""}
+        ${missingMods ? `<br>• Concluir todos os ${MODULES.length} módulos (faltam ${MODULES.length - state.completedModules.length}).` : ""}
+      `;
+    } else {
+      warn.style.display = "none";
+    }
+
+    form.innerHTML = QUIZ_QUESTIONS.map((item, idx) => `
+      <div class="quiz-question" id="q-box-${idx}">
+        <h4>${item.q}</h4>
+        ${item.options.map((opt, optIdx) => `
+          <label class="quiz-option">
+            <input type="radio" name="q_${idx}" value="${optIdx}" required />
+            <span>${opt}</span>
+          </label>
+        `).join("")}
+        <div class="q-feedback" id="q-fb-${idx}" style="font-size:0.84rem; margin-top:8px;"></div>
+      </div>
+    `).join("") + `
+      <button type="submit" class="btn btn-primary" style="font-size:1rem; padding:12px 24px;">✅ Finalizar e Corrigir Prova</button>
+    `;
+  }
+
+  document.getElementById("form-quiz").addEventListener("submit", (e) => {
+    e.preventDefault();
+    let hits = 0;
+    QUIZ_QUESTIONS.forEach((item, idx) => {
+      const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+      const fb = document.getElementById(`q-fb-${idx}`);
+      const box = document.getElementById(`q-box-${idx}`);
+      const val = selected ? Number(selected.value) : -1;
+
+      if (val === item.correct) {
+        hits++;
+        box.style.borderColor = "var(--success)";
+        fb.innerHTML = `<span style="color:var(--success); font-weight:600;">✔ Correta!</span> <span style="color:var(--muted);">(${item.ref})</span>`;
+      } else {
+        box.style.borderColor = "var(--danger)";
+        fb.innerHTML = `<span style="color:var(--danger); font-weight:600;">✘ Incorreta.</span> Resposta correta: <strong>${item.options[item.correct]}</strong> <span style="color:var(--muted);">(${item.ref})</span>`;
+      }
+    });
+
+    const pct = Math.round((hits / QUIZ_QUESTIONS.length) * 100);
+    const passed = pct >= 70;
+    state.quizScore = pct;
+    state.quizPassed = passed;
+    if (passed) {
+      if (!state.certCode) {
+        const rand = Math.random().toString(36).substring(2, 8).toUpperCase();
+        state.certCode = `PBR-${new Date().getFullYear()}-${rand}`;
+      }
+      state.certDate = new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" });
+    }
+    saveState();
+
+    const resEl = document.getElementById("quiz-result");
+    if (passed) {
+      resEl.innerHTML = `
+        <div class="alert alert-success">
+          <h3>🎉 Parabéns! Você foi aprovado com ${pct}% (${hits}/${QUIZ_QUESTIONS.length} acertos)!</h3>
+          <p style="margin:8px 0;">Seu certificado já pode ser visualizado e baixado na aba Certificado (desde que o cadastro e os 5 módulos estejam concluídos).</p>
+          <button type="button" class="btn btn-success" onclick="switchTab('tab-certificado')">🎓 Ir para o Certificado →</button>
+        </div>
+      `;
+    } else {
+      resEl.innerHTML = `
+        <div class="alert alert-danger">
+          <h3>Nota obtida: ${pct}% (${hits}/${QUIZ_QUESTIONS.length} acertos)</h3>
+          <p>A nota mínima para certificação é <strong>70%</strong>. Revise o gabarito comentado acima e os módulos do curso, e tente novamente.</p>
+        </div>
+      `;
+    }
+    resEl.scrollIntoView({ behavior: "smooth" });
+  });
+
+  // =========================================================================
+  // 9. CERTIFICADO E EXPORTAÇÃO (PRINT PDF & CANVAS PNG)
+  // =========================================================================
+  function isCertificateUnlocked() {
+    return Boolean(
+      state.user &&
+      state.completedModules.length === MODULES.length &&
+      state.quizPassed
+    );
+  }
+
+  function renderCertificate() {
+    const unlocked = isCertificateUnlocked();
+    document.getElementById("cert-locked").style.display = unlocked ? "none" : "block";
+    document.getElementById("certificado-print-area").style.display = unlocked ? "block" : "none";
+    document.getElementById("cert-actions").style.display = unlocked ? "flex" : "none";
+
+    if (!unlocked) {
+      const reasons = [];
+      if (!state.user) reasons.push("preencher o Cadastro");
+      if (state.completedModules.length < MODULES.length) reasons.push(`concluir os ${MODULES.length} Módulos`);
+      if (!state.quizPassed) reasons.push("obter ≥ 70% na Prova Online");
+      document.getElementById("cert-locked").innerHTML = `🔒 Para liberar seu certificado, falta: <strong>${reasons.join(", ")}</strong>.`;
+      return;
+    }
+
+    document.getElementById("cert-user-name").textContent = state.user.nome;
+    document.getElementById("cert-user-cpf").textContent = state.user.cpf;
+    document.getElementById("cert-user-cargo").textContent = state.user.cargo;
+    document.getElementById("cert-user-turno").textContent = state.user.turno;
+    document.getElementById("cert-user-score").textContent = `${state.quizScore}%`;
+    document.getElementById("cert-date").textContent = state.certDate || new Date().toLocaleDateString("pt-BR");
+    document.getElementById("cert-sign-worker").textContent = state.user.nome;
+    document.getElementById("cert-validation-code").textContent = `Código de Autenticação: ${state.certCode} | Base Legal: Convenção (06/12/2023) e Regimento Interno (12/01/2024)`;
+  }
+
+  function downloadCertificatePNG() {
+    if (!isCertificateUnlocked()) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = 1400;
+    canvas.height = 990;
+    const ctx = canvas.getContext("2d");
+
+    // Fundo
+    const grad = ctx.createLinearGradient(0, 0, 1400, 990);
+    grad.addColorStop(0, "#ffffff");
+    grad.addColorStop(1, "#eef7fa");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1400, 990);
+
+    // Molduras
+    ctx.strokeStyle = "#0b5c7a";
+    ctx.lineWidth = 18;
+    ctx.strokeRect(30, 30, 1340, 930);
+    ctx.strokeStyle = "#e6a13c";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(54, 54, 1292, 882);
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#0b5c7a";
+    ctx.font = "bold 24px Segoe UI, Arial";
+    ctx.fillText("CONDOMÍNIO PADANG BEACH RESIDENCE — BARRA DOS COQUEIROS / SE", 700, 130);
+
+    ctx.fillStyle = "#074157";
+    ctx.font = "bold 56px Georgia, serif";
+    ctx.fillText("CERTIFICADO DE CONCLUSÃO", 700, 215);
+
+    ctx.fillStyle = "#445668";
+    ctx.font = "24px Segoe UI, Arial";
+    ctx.fillText("Certificamos, para os devidos fins trabalhistas e operacionais, que", 700, 295);
+
+    ctx.fillStyle = "#159895";
+    ctx.font = "bold 46px Georgia, serif";
+    ctx.fillText(state.user.nome, 700, 375);
+
+    ctx.strokeStyle = "#e6a13c";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(320, 395);
+    ctx.lineTo(1080, 395);
+    ctx.stroke();
+
+    ctx.fillStyle = "#1f2d3d";
+    ctx.font = "24px Segoe UI, Arial";
+    const lines = [
+      `portador(a) do CPF nº ${state.user.cpf}, atuando na função de ${state.user.cargo} (${state.user.turno}),`,
+      `concluiu com êxito o Curso de Capacitação em Regimento Interno e Convenção Condominial`,
+      `do Padang Beach Residence, com carga horária de 8 horas, obtendo aproveitamento de ${state.quizScore}%`,
+      `na avaliação online final.`
+    ];
+    lines.forEach((line, i) => ctx.fillText(line, 700, 465 + i * 42));
+
+    ctx.fillStyle = "#5c6f84";
+    ctx.font = "22px Segoe UI, Arial";
+    ctx.fillText(`Barra dos Coqueiros (SE), ${state.certDate}`, 700, 680);
+
+    // Assinaturas
+    ctx.strokeStyle = "#445668";
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(220, 800); ctx.lineTo(580, 800); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(820, 800); ctx.lineTo(1180, 800); ctx.stroke();
+
+    ctx.fillStyle = "#1f2d3d";
+    ctx.font = "bold 20px Segoe UI, Arial";
+    ctx.fillText("Administração / Síndico", 400, 835);
+    ctx.fillText(state.user.nome, 1000, 835);
+    ctx.font = "18px Segoe UI, Arial";
+    ctx.fillStyle = "#5c6f84";
+    ctx.fillText("Padang Beach Residence", 400, 862);
+    ctx.fillText("Ciência das Normas Condominiais", 1000, 862);
+
+    ctx.font = "16px Segoe UI, Arial";
+    ctx.fillText(`Autenticação: ${state.certCode} | Convenção (06/12/2023) e Regimento Interno (12/01/2024)`, 700, 920);
+
+    const link = document.createElement("a");
+    link.download = `Certificado_Padang_${state.user.nome.replace(/\s+/g, "_")}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+
+  // =========================================================================
+  // 10. ATUALIZAÇÃO GLOBAL DE PROGRESSO & UTILIDADES
+  // =========================================================================
+  function updateUI() {
+    const pill = document.getElementById("header-user-status");
+    if (state.user) {
+      pill.innerHTML = `<span>👤 <strong>${escapeHtml(state.user.nome)}</strong> • ${escapeHtml(state.user.cargo)}</span>`;
+    } else {
+      pill.innerHTML = `<span>👤 Colaborador não cadastrado</span>`;
+    }
+
+    // Progresso total: 10% cadastro + 70% módulos (14% cada) + 20% prova
+    let progress = 0;
+    if (state.user) progress += 10;
+    progress += Math.round((state.completedModules.length / MODULES.length) * 70);
+    if (state.quizPassed) progress += 20;
+
+    document.getElementById("overall-progress-label").textContent = `${progress}%`;
+    document.getElementById("overall-progress-bar").style.width = `${progress}%`;
+  }
+
+  function escapeHtml(str) {
+    return String(str || "").replace(/[&<>"']/g, m => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[m]));
+  }
+
+  // Inicialização
+  (async function init() {
+    loadState();
+    await openDB();
+    fillCadastroForm();
+    populateAnexoModuleSelect();
+    renderModuleSidebar();
+    updateUI();
+  })();
+</script>
+
+</body>
+</html>
